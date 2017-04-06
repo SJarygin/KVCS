@@ -1,0 +1,1 @@
+mvn compile exec:java -Dkms.url=ws://kms2.ddns.net:8888/kurento
