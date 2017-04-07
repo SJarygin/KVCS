@@ -70,6 +70,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.kurento</groupId>
+			<artifactId>kurento-repository-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.kurento</groupId>
 			<artifactId>kurento-utils-js</artifactId>
 		</dependency>
 		<dependency>

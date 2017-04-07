@@ -18,6 +18,8 @@
 package org.kurento.tutorial.groupcall;
 
 import org.kurento.client.KurentoClient;
+import org.kurento.repository.RepositoryClient;
+import org.kurento.repository.RepositoryClientProvider;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -33,6 +35,13 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @SpringBootApplication
 @EnableWebSocket
 public class GroupCallApp implements WebSocketConfigurer {
+
+  protected static final String DEFAULT_REPOSITORY_SERVER_URI = "http://localhost:7676";
+  protected static final String REPOSITORY_SERVER_URI = System.getProperty("repository.uri",
+          DEFAULT_REPOSITORY_SERVER_URI);
+  // slightly larger timeout
+  protected static final int REPOSITORY_DISCONNECT_TIMEOUT = 5500;
+  protected static final String RECORDING_EXT = ".webm";
 
   @Bean
   public UserRegistry registry() {
@@ -54,6 +63,11 @@ public class GroupCallApp implements WebSocketConfigurer {
     return KurentoClient.create();
   }
 
+  @Bean
+  public RepositoryClient repositoryServiceProvider() {
+    return REPOSITORY_SERVER_URI.startsWith("file://") ? null
+            : RepositoryClientProvider.create(REPOSITORY_SERVER_URI);
+  }
   public static void main(String[] args) throws Exception {
     SpringApplication.run(GroupCallApp.class, args);
   }

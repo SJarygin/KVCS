@@ -26,6 +26,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Kurento Video Conference Service" target="1.7" />
       <module name="kurento-chroma" target="1.7" />
       <module name="kurento-crowddetector" target="1.7" />
       <module name="kurento-group-call" target="1.7" />

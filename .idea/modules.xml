@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Kurento Video Conference Service.iml" filepath="$PROJECT_DIR$/Kurento Video Conference Service.iml" />
       <module fileurl="file://$PROJECT_DIR$/kurento-chroma/kurento-chroma.iml" filepath="$PROJECT_DIR$/kurento-chroma/kurento-chroma.iml" />
       <module fileurl="file://$PROJECT_DIR$/kurento-crowddetector/kurento-crowddetector.iml" filepath="$PROJECT_DIR$/kurento-crowddetector/kurento-crowddetector.iml" />
       <module fileurl="file://$PROJECT_DIR$/kurento-group-call/kurento-group-call.iml" filepath="$PROJECT_DIR$/kurento-group-call/kurento-group-call.iml" />
@@ -19,7 +20,6 @@
       <module fileurl="file://$PROJECT_DIR$/kurento-pointerdetector/kurento-pointerdetector.iml" filepath="$PROJECT_DIR$/kurento-pointerdetector/kurento-pointerdetector.iml" />
       <module fileurl="file://$PROJECT_DIR$/kurento-send-data-channel/kurento-send-data-channel.iml" filepath="$PROJECT_DIR$/kurento-send-data-channel/kurento-send-data-channel.iml" />
       <module fileurl="file://$PROJECT_DIR$/kurento-show-data-channel/kurento-show-data-channel.iml" filepath="$PROJECT_DIR$/kurento-show-data-channel/kurento-show-data-channel.iml" />
-      <module fileurl="file://$PROJECT_DIR$/kurento-tutorial.iml" filepath="$PROJECT_DIR$/kurento-tutorial.iml" />
     </modules>
   </component>
 </project>

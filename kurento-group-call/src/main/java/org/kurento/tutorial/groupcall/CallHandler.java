@@ -41,11 +41,17 @@ public class CallHandler extends TextWebSocketHandler {
 
     private static final Gson gson = new GsonBuilder().create();
 
+
+
+
+
     @Autowired
     private RoomManager roomManager;
 
     @Autowired
     private UserRegistry registry;
+
+
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {

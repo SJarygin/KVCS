@@ -21,6 +21,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.kurento.client.KurentoClient;
 import org.kurento.jsonrpc.JsonUtils;
+import org.kurento.repository.RepositoryClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,38 +40,41 @@ public class RoomManager {
 
     @Autowired
     private KurentoClient kurento;
+    @Autowired
+    private RepositoryClient repositoryClient;
+
 
     private final ConcurrentMap<String, Room> rooms = new ConcurrentHashMap<>();
 
     /**
      * Looks for a room in the active room list.
      *
-     * @param roomName the name of the room
+     * @param ARoomName the name of the room
      * @return the room if it was already created, or a new one if it is the first time this room is
      * accessed
      */
-    public Room getRoom(String roomName) {
-        log.debug("Searching for room {}", roomName);
-        Room room = rooms.get(roomName);
+    public Room getRoom(String ARoomName) {
+        log.debug("Searching for room {}", ARoomName);
+        Room room = rooms.get(ARoomName);
 
         if (room == null) {
-            log.debug("Room {} not existent. Will create now!", roomName);
-            room = new Room(roomName, kurento.createMediaPipeline());
-            rooms.put(roomName, room);
+            log.debug("Room {} not existent. Will create now!", ARoomName);
+            room = new Room(ARoomName, kurento.createMediaPipeline(),repositoryClient);
+            rooms.put(ARoomName, room);
         }
-        log.debug("Room {} found!", roomName);
+        log.debug("Room {} found!", ARoomName);
         return room;
     }
 
     /**
      * Removes a room from the list of available rooms.
      *
-     * @param room the room to be removed
+     * @param ARoom the room to be removed
      */
-    public void removeRoom(Room room) {
-        this.rooms.remove(room.getName());
-        room.close();
-        log.info("Room {} removed and closed", room.getName());
+    public void removeRoom(Room ARoom) {
+        this.rooms.remove(ARoom.getName());
+        ARoom.close();
+        log.info("Room {} removed and closed", ARoom.getName());
     }
 
     public JsonObject getRoomStatistic() {
