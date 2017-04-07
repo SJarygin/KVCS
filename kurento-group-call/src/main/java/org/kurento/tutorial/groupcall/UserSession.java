@@ -30,9 +30,7 @@ import org.springframework.web.socket.WebSocketSession;
 import java.io.Closeable;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -60,7 +58,10 @@ public class UserSession implements Closeable {
         RepositoryItemRecorder repoItem = null;
         if (ARepositoryClient != null) {
             try {
-                Map<String, String> metadata = Collections.emptyMap();
+                ConcurrentHashMap<String, String> metadata = new ConcurrentHashMap<>();
+                metadata.put("roomName",ARoomName);
+                metadata.put("userName",AName);
+                metadata.put("startDate",(new Date()).toString());
                 repoItem = ARepositoryClient.createRepositoryItem(metadata);
             } catch (Exception e) {
                 log.warn("Unable to create kurento repository items", e);
