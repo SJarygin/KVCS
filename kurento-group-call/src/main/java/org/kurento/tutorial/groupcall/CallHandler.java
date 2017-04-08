@@ -42,15 +42,11 @@ public class CallHandler extends TextWebSocketHandler {
     private static final Gson gson = new GsonBuilder().create();
 
 
-
-
-
     @Autowired
     private RoomManager roomManager;
 
     @Autowired
     private UserRegistry registry;
-
 
 
     @Override
@@ -98,7 +94,9 @@ public class CallHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         UserSession user = registry.removeBySession(session);
-        roomManager.getRoom(user.getRoomName()).leave(user);
+        if (user != null) {
+            roomManager.getRoom(user.getRoomName()).leave(user);
+        }
     }
 
     private void joinRoom(JsonObject params, WebSocketSession session) throws IOException {
@@ -119,9 +117,9 @@ public class CallHandler extends TextWebSocketHandler {
         }
     }
 
-    private void getRoomStatistic(WebSocketSession session)throws IOException{
+    private void getRoomStatistic(WebSocketSession session) throws IOException {
 
-        final JsonObject message=roomManager.getRoomStatistic();
+        final JsonObject message = roomManager.getRoomStatistic();
 
 
         synchronized (session) {

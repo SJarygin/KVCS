@@ -19,6 +19,7 @@ var ws = null;
 reConnect();
 var participants = {};
 var name;
+var rtsp2webRtc;
 
 setInterval(function () {
     reConnect();
@@ -41,11 +42,17 @@ function reConnect() {
 
 window.onload = function () {
     $('#stat').draggable();
-}
+    $('#camera').draggable();
+    rtsp2webRtc = new Rtsp2WebRtc(args.ws_uri, document.getElementById('videoOutput'));
+    rtsp2webRtc.Start('rtsp://satware.ddns.net:554');
+};
 
 window.onbeforeunload = function () {
     if (ws != null) {
         ws.close();
+    }
+    if (rtsp2webRtc != null) {
+        rtsp2webRtc.Stop();
     }
 };
 
@@ -84,7 +91,7 @@ function OnMessage(message) {
 }
 
 function viewStatistic(AMessage) {
-    console.log(JSON.stringify(AMessage));
+    //console.log(JSON.stringify(AMessage));
     var statElement = document.getElementById("statList");
 
     if (AMessage.rooms.length == 0) {
@@ -163,13 +170,14 @@ function onExistingParticipants(msg) {
         localVideo: video,
         mediaConstraints: constraints,
         onicecandidate: participant.onIceCandidate.bind(participant)
-    }
+    };
     participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options,
         function (error) {
             if (error) {
                 return console.error(error);
             }
             this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+
         });
 
     msg.data.forEach(receiveVideo);
@@ -232,7 +240,9 @@ function sendMessage(message) {
     }
     try {
         var jsonMessage = JSON.stringify(message);
-        console.log('Senging message: ' + jsonMessage);
+        if (message.id != 'roomStatistic') {
+            console.log('Senging message: ' + jsonMessage);
+        }
         ws.send(jsonMessage);
     } catch (err) {
         console.error(err);
